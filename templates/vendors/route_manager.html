@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %}Route & Schedule - {{ vendor.business_name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24 sm:pb-12">
+    <div class="flex items-center gap-2 mb-2">
+        <a href="{% url 'vendor_dashboard' %}" class="text-xs font-bold text-emerald-700 hover:underline flex items-center gap-1">
+            <span>←</span>
+            <span>Back to Partner Console</span>
+        </a>
+    </div>
+    <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mb-1">Daily Route & Mohalla Schedule</h1>
+    <p class="text-xs sm:text-sm text-slate-500 mb-8">Update your operational timings, neighborhood rounds, and route path</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- Form -->
+        <div class="lg:col-span-5">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm">
+                <h3 class="text-base font-black text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-sm">📍</span>
+                    <span>Route Parameters</span>
+                </h3>
+
+                <form method="POST" action="{% url 'vendor_route_manager' %}" class="space-y-4 text-xs">
+                    {% csrf_token %}
+
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Primary Mohalla / Area Name</label>
+                        <input type="text" name="area_name" value="{{ vendor.area_name }}" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">City</label>
+                            <input type="text" name="city" value="{{ vendor.city }}" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Pincode</label>
+                            <input type="text" name="pincode" value="{{ vendor.pincode }}" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Morning Route Slot</label>
+                            <input type="text" name="morning_slot" value="{{ vendor.morning_slot }}" placeholder="e.g. 7:00 AM - 11:30 AM" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Evening Route Slot</label>
+                            <input type="text" name="evening_slot" value="{{ vendor.evening_slot }}" placeholder="e.g. 4:30 PM - 8:30 PM" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Vehicle Type</label>
+                        <select name="vehicle_type" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white font-medium">
+                            {% for v_key, v_label in vehicles %}
+                                <option value="{{ v_key }}" {% if vendor.vehicle_type == v_key %}selected{% endif %}>{{ v_label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Route & Landmark Description</label>
+                        <textarea name="route_description" rows="3" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50" placeholder="e.g. Starts near Hanuman Mandir -> Gali 1 to 7 -> Shiv Park">{{ vendor.route_description }}</textarea>
+                    </div>
+
+                    <input type="hidden" name="route_coordinates" id="route_coords_input" value="{{ vendor.route_coordinates }}">
+
+                    <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-2xl shadow-md shadow-emerald-600/20 transition active:scale-98 cursor-pointer">
+                        Save Route & Schedule
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Interactive Route Visualizer -->
+        <div class="lg:col-span-7">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-base font-black text-slate-900">Map Route Preview</h3>
+                    <span class="text-xs text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-xl">🟢 Live on Home Discovery</span>
+                </div>
+                <div id="routeMap" class="w-full h-80 rounded-2xl border border-slate-200 z-10 shadow-inner"></div>
+                <p class="text-[11px] text-slate-400 mt-3">Your route coordinates are plotted for local neighborhood customers looking for nearby thelas.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const routePoints = {{ route_points_json|safe }};
+        let defaultLat = 28.6139;
+        let defaultLng = 77.2090;
+
+        if (routePoints.length > 0) {
+            defaultLat = routePoints[0][0];
+            defaultLng = routePoints[0][1];
+        }
+
+        const map = L.map('routeMap', { zoomControl: false }).setView([defaultLat, defaultLng], 14);
+        L.control.zoom({ position: 'topright' }).addTo(map);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 20
+        }).addTo(map);
+
+        if (routePoints.length > 0) {
+            L.polyline(routePoints, { color: '#0c831f', weight: 5, opacity: 0.85, lineJoin: 'round' }).addTo(map);
+            
+            const originIcon = L.divIcon({
+                className: 'custom-div-icon',
+                html: `<div class="bg-emerald-600 text-white rounded-full p-2 shadow-lg border-2 border-white text-base">🛒</div>`,
+                iconSize: [36, 36],
+                iconAnchor: [18, 18]
+            });
+
+            L.marker(routePoints[0], { icon: originIcon }).addTo(map).bindPopup('<b>{{ vendor.business_name }}</b><br>Daily Route Origin');
+            map.fitBounds(routePoints, { padding: [30, 30] });
+        }
+    });
+</script>
+{% endblock %}

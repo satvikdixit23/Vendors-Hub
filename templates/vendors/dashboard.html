@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block title %}Partner Portal - {{ vendor.business_name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24 sm:pb-12">
+    <!-- Top Greeting & Live Cart Status Switcher -->
+    <div class="bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white rounded-3xl p-6 sm:p-8 shadow-sm mb-8 relative overflow-hidden">
+        <div class="absolute -right-12 -top-12 w-64 h-64 bg-emerald-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="text-[11px] font-black uppercase tracking-wider text-emerald-300 bg-emerald-800/60 px-3 py-1 rounded-full border border-emerald-700/50">
+                        🥦 Vendor Partner Operations
+                    </span>
+                    {% if vendor.is_currently_promoted %}
+                        <span class="bg-gradient-to-r from-amber-400 to-yellow-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
+                            ⭐ Boosted Cart
+                        </span>
+                    {% endif %}
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-black tracking-tight">{{ vendor.business_name }}</h1>
+                <p class="text-xs sm:text-sm text-emerald-100/80 mt-1 font-medium flex items-center gap-2">
+                    <span>{{ vendor.get_category_display }}</span>
+                    <span>•</span>
+                    <span>{{ vendor.get_vehicle_type_display }}</span>
+                    <span>•</span>
+                    <span>📍 {{ vendor.area_name }}, {{ vendor.city }}</span>
+                </p>
+            </div>
+
+            <!-- Live Status Form Switcher -->
+            <form method="POST" action="{% url 'vendor_dashboard' %}" class="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/20 flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto shadow-inner">
+                {% csrf_token %}
+                <input type="hidden" name="update_status" value="1">
+                <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" name="is_active_today" value="1" {% if vendor.is_active_today %}checked{% endif %} class="sr-only peer" onchange="this.form.submit()">
+                        <div class="w-11 h-6 bg-slate-700/80 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-400"></div>
+                    </label>
+                    <span class="text-xs font-black whitespace-nowrap">
+                        {% if vendor.is_active_today %}
+                            <span class="text-emerald-300">🟢 Live On Route</span>
+                        {% else %}
+                            <span class="text-slate-300">⚪ Thela Closed</span>
+                        {% endif %}
+                    </span>
+                </div>
+                <input type="text" name="status_text" value="{{ vendor.status_text }}" placeholder="e.g. Near Gali 4, fresh lot arrived!" class="px-3.5 py-2 rounded-xl bg-white text-slate-800 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-400 w-full sm:w-60 placeholder-slate-400 shadow-inner">
+                <button type="submit" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs rounded-xl transition whitespace-nowrap w-full sm:w-auto shadow-sm active:scale-95 cursor-pointer">
+                    Update
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Partner Action Hub Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+        <a href="{% url 'vendor_product_manager' %}" class="bg-white p-5 rounded-3xl border border-slate-100 shadow-xs hover:border-emerald-300 hover:shadow-md transition duration-200 flex flex-col justify-between group">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition">
+                🛒
+            </div>
+            <div class="mt-4">
+                <h3 class="font-extrabold text-slate-900 text-sm group-hover:text-emerald-700 transition">Cart Stock</h3>
+                <p class="text-xs text-slate-500 font-medium">{{ total_products }} Items in Menu</p>
+            </div>
+        </a>
+
+        <a href="{% url 'vendor_route_manager' %}" class="bg-white p-5 rounded-3xl border border-slate-100 shadow-xs hover:border-emerald-300 hover:shadow-md transition duration-200 flex flex-col justify-between group">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition">
+                🗺️
+            </div>
+            <div class="mt-4">
+                <h3 class="font-extrabold text-slate-900 text-sm group-hover:text-emerald-700 transition">Route & Timings</h3>
+                <p class="text-xs text-slate-500 font-medium">Edit Mohalla Stops</p>
+            </div>
+        </a>
+
+        <a href="{% url 'vendor_orders' %}" class="bg-white p-5 rounded-3xl border border-slate-100 shadow-xs hover:border-emerald-300 hover:shadow-md transition duration-200 flex flex-col justify-between group">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition">
+                📦
+            </div>
+            <div class="mt-4">
+                <h3 class="font-extrabold text-slate-900 text-sm group-hover:text-emerald-700 transition">Customer Orders</h3>
+                <p class="text-xs text-emerald-700 font-bold">{{ pending_orders_count }} Pending Delivery</p>
+            </div>
+        </a>
+
+        <a href="{% url 'vendor_promotions' %}" class="bg-white p-5 rounded-3xl border border-slate-100 shadow-xs hover:border-amber-300 hover:shadow-md transition duration-200 flex flex-col justify-between group">
+            <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition">
+                ⭐
+            </div>
+            <div class="mt-4">
+                <h3 class="font-extrabold text-slate-900 text-sm group-hover:text-amber-700 transition">Promotions</h3>
+                <p class="text-xs text-slate-500 font-medium">Feature on Top</p>
+            </div>
+        </a>
+    </div>
+
+    <!-- Operations Metrics Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-xs relative overflow-hidden">
+            <span class="text-[11px] font-black uppercase tracking-wider text-slate-400">Today's Pre-Orders</span>
+            <div class="text-3xl font-black text-slate-900 mt-2 tracking-tight">{{ today_orders_count }} Orders</div>
+            <p class="text-xs text-emerald-700 mt-1 font-semibold flex items-center gap-1">
+                <span>⚡</span>
+                <span>To deliver during route rounds</span>
+            </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-xs relative overflow-hidden">
+            <span class="text-[11px] font-black uppercase tracking-wider text-slate-400">Active Inventory Items</span>
+            <div class="text-3xl font-black text-slate-900 mt-2 tracking-tight">{{ total_products }} Items</div>
+            <a href="{% url 'vendor_product_manager' %}" class="text-xs text-emerald-700 font-extrabold hover:underline mt-1 inline-flex items-center gap-1">
+                <span>+ Add / Manage Stock</span>
+                <span>→</span>
+            </a>
+        </div>
+
+        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-xs relative overflow-hidden">
+            <span class="text-[11px] font-black uppercase tracking-wider text-slate-400">Total Revenue Collected</span>
+            <div class="text-3xl font-black text-emerald-700 mt-2 tracking-tight">₹{{ total_revenue }}</div>
+            <p class="text-xs text-slate-500 mt-1 font-medium">100% direct cash & UPI to your wallet</p>
+        </div>
+    </div>
+
+    <!-- Recent Orders Table -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-xs">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h2 class="text-lg font-black text-slate-900 flex items-center gap-2">
+                    <span>📦</span>
+                    <span>Recent Customer Pre-Orders</span>
+                </h2>
+                <p class="text-xs text-slate-400">Deliveries scheduled by mohalla residents</p>
+            </div>
+            <a href="{% url 'vendor_orders' %}" class="text-xs font-black text-emerald-700 hover:underline">
+                View All Orders →
+            </a>
+        </div>
+
+        {% if recent_orders %}
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-100 text-xs">
+                <thead>
+                    <tr class="text-left font-black text-slate-400 uppercase tracking-wider text-[10px]">
+                        <th class="py-3 px-4">Order ID</th>
+                        <th class="py-3 px-4">Customer</th>
+                        <th class="py-3 px-4">Delivery Spot & Slot</th>
+                        <th class="py-3 px-4">Bill Amount</th>
+                        <th class="py-3 px-4">Status</th>
+                        <th class="py-3 px-4 text-right">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50 font-medium text-slate-700">
+                    {% for order in recent_orders %}
+                    <tr class="hover:bg-slate-50/70 transition">
+                        <td class="py-3.5 px-4 font-mono font-bold text-emerald-800">#{{ order.order_id }}</td>
+                        <td class="py-3.5 px-4">
+                            <div class="font-extrabold text-slate-900">{{ order.customer_name }}</div>
+                            <a href="tel:{{ order.customer_phone }}" class="text-slate-400 text-[10px] hover:text-emerald-700 font-semibold">{{ order.customer_phone }}</a>
+                        </td>
+                        <td class="py-3.5 px-4">
+                            <div class="max-w-xs truncate text-slate-800">{{ order.delivery_address }}</div>
+                            <div class="text-emerald-700 font-bold text-[10px]">⏰ {{ order.delivery_slot }}</div>
+                        </td>
+                        <td class="py-3.5 px-4 font-black text-slate-900">₹{{ order.total_amount }}</td>
+                        <td class="py-3.5 px-4">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider {% if order.status == 'DELIVERED' %}bg-emerald-100 text-emerald-800{% elif order.status == 'CANCELLED' %}bg-rose-100 text-rose-800{% else %}bg-amber-100 text-amber-800{% endif %}">
+                                {{ order.get_status_display }}
+                            </span>
+                        </td>
+                        <td class="py-3.5 px-4 text-right">
+                            <a href="{% url 'order_detail' order.order_id %}" class="px-3.5 py-1.5 bg-slate-100 hover:bg-emerald-600 hover:text-white rounded-xl text-xs font-black transition shadow-xs inline-block">
+                                View Order
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-12 text-slate-400">
+            <span class="text-4xl block mb-2 opacity-70">📬</span>
+            <p class="text-sm font-extrabold text-slate-700">No incoming pre-orders yet</p>
+            <p class="text-xs text-slate-400 mt-1">Keep your thela marked active and your items stocked to receive customer orders!</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

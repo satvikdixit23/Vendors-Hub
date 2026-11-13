@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Account - Vendor's Hub{% endblock %}
+
+{% block content %}
+<div class="min-h-[85vh] py-10 bg-slate-50/50 flex flex-col justify-center sm:px-6 lg:px-8 pb-24 sm:pb-12">
+    <div class="sm:mx-auto sm:w-full sm:max-w-xl">
+        <div class="text-center">
+            <div class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-3xl font-black mx-auto shadow-md shadow-emerald-600/20 mb-3">
+                🛒
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Create your account</h2>
+            <p class="mt-1 text-xs sm:text-sm text-slate-500">
+                Join India's direct zero-commission neighborhood commerce platform
+            </p>
+        </div>
+    </div>
+
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-xl">
+        <div class="bg-white py-8 px-6 shadow-sm border border-slate-100 rounded-3xl sm:px-10">
+            {% if messages %}
+                <div class="mb-5 space-y-2">
+                    {% for message in messages %}
+                        <div class="p-3.5 rounded-2xl text-xs font-semibold {% if message.tags == 'error' %}bg-rose-50 text-rose-800 border border-rose-200{% else %}bg-emerald-50 text-emerald-800 border border-emerald-200{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form class="space-y-5" method="POST" action="{% url 'register' %}">
+                {% csrf_token %}
+
+                <!-- Account Type Selector Tabs -->
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-2">I want to register as:</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="border-2 border-emerald-500 bg-emerald-50/60 p-4 rounded-2xl flex items-center gap-3 cursor-pointer transition shadow-xs" id="customerTab">
+                            <input type="radio" name="user_type" value="CUSTOMER" checked class="text-emerald-600 focus:ring-emerald-500" onchange="toggleVendorFields(false)">
+                            <div>
+                                <p class="text-xs font-black text-slate-900">🏠 Customer</p>
+                                <p class="text-[10px] text-slate-500 font-medium">Order from local thelas</p>
+                            </div>
+                        </label>
+                        <label class="border-2 border-slate-200 hover:border-emerald-400 p-4 rounded-2xl flex items-center gap-3 cursor-pointer transition shadow-xs" id="vendorTab">
+                            <input type="radio" name="user_type" value="VENDOR" class="text-emerald-600 focus:ring-emerald-500" onchange="toggleVendorFields(true)">
+                            <div>
+                                <p class="text-xs font-black text-slate-900">🥦 Thela Vendor</p>
+                                <p class="text-[10px] text-slate-500 font-medium">List cart & receive orders</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Common Personal Details -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Full Name</label>
+                        <input type="text" name="full_name" required placeholder="e.g. Ramesh Kumar" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Phone Number (WhatsApp)</label>
+                        <input type="tel" name="phone" required placeholder="e.g. 9811223344" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Username</label>
+                        <input type="text" name="username" required placeholder="e.g. ramesh_sabzi" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Email Address (Optional)</label>
+                        <input type="email" name="email" placeholder="ramesh@example.com" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50">
+                    </div>
+                </div>
+
+                <!-- Vendor Specific Fields (Hidden by default, shown if VENDOR selected) -->
+                <div id="vendorSpecificSection" class="hidden space-y-3.5 border-t border-b border-slate-100 py-4 bg-emerald-50/40 p-4 rounded-2xl border border-emerald-100">
+                    <h3 class="text-xs font-black text-emerald-900 uppercase tracking-wider">Thela & Mohalla Route Information</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Business / Thela Name</label>
+                            <input type="text" name="business_name" placeholder="e.g. Ramesh Desi Sabzi Bhandar" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Category of Cart</label>
+                            <select name="category" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
+                                {% for code, label in categories %}
+                                    <option value="{{ code }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">City</label>
+                            <input type="text" name="city" value="New Delhi" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Operating Area / Mohalla</label>
+                            <input type="text" name="area_name" placeholder="e.g. Janakpuri Block B, Gali 1 to 9" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Vehicle / Transport Type</label>
+                        <select name="vehicle_type" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
+                            {% for code, label in vehicles %}
+                                <option value="{{ code }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Daily Route Description</label>
+                        <textarea name="route_description" rows="2" placeholder="e.g. Starts from Mandir Mod -> Gali No. 1 to 5 -> DDA Park -> Main Chowk" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white"></textarea>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Password</label>
+                        <input type="password" name="password" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Confirm Password</label>
+                        <input type="password" name="confirm_password" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50">
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm rounded-2xl shadow-md shadow-emerald-600/20 transition active:scale-98 cursor-pointer">
+                        Complete Registration →
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-6 border-t border-slate-100 pt-5 text-center">
+                <p class="text-xs text-slate-500 font-medium">
+                    Already registered?
+                    <a href="{% url 'login' %}" class="font-black text-emerald-700 hover:underline">
+                        Sign in here
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleVendorFields(isVendor) {
+    const vendorSection = document.getElementById('vendorSpecificSection');
+    const customerTab = document.getElementById('customerTab');
+    const vendorTab = document.getElementById('vendorTab');
+
+    if (isVendor) {
+        vendorSection.classList.remove('hidden');
+        vendorTab.classList.add('border-emerald-500', 'bg-emerald-50/60');
+        vendorTab.classList.remove('border-slate-200');
+        customerTab.classList.remove('border-emerald-500', 'bg-emerald-50/60');
+        customerTab.classList.add('border-slate-200');
+    } else {
+        vendorSection.classList.add('hidden');
+        customerTab.classList.add('border-emerald-500', 'bg-emerald-50/60');
+        customerTab.classList.remove('border-slate-200');
+        vendorTab.classList.remove('border-emerald-500', 'bg-emerald-50/60');
+        vendorTab.classList.add('border-slate-200');
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}Order #{{ order.order_id }} - Live Tracking - Vendor's Hub{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 sm:pb-12">
+    <!-- Success Banner -->
+    <div class="bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border border-emerald-200/80 rounded-3xl p-6 sm:p-8 text-center mb-8 shadow-sm relative overflow-hidden">
+        <div class="w-16 h-16 rounded-2xl bg-white text-emerald-700 mx-auto flex items-center justify-center text-3xl shadow-sm mb-3">
+            🎉
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Pre-Order Scheduled Successfully!</h1>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1.5 max-w-lg mx-auto">
+            Your fresh items have been reserved with <strong class="text-emerald-800">{{ order.vendor.business_name }}</strong>. Pay directly when the cart arrives!
+        </p>
+
+        <div class="mt-6 flex flex-wrap justify-center gap-3">
+            <a href="{{ wa_url }}" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs shadow-md shadow-emerald-600/20 transition active:scale-95">
+                <span>💬</span>
+                <span>Chat on WhatsApp</span>
+            </a>
+            <a href="tel:{{ order.vendor.phone }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white text-slate-800 hover:bg-slate-50 border border-slate-200 font-black text-xs shadow-xs transition active:scale-95">
+                <span>📞</span>
+                <span>Call {{ order.vendor.phone }}</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Order Tracking Card -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center pb-6 border-b border-slate-100 gap-3">
+            <div>
+                <span class="text-[10px] font-black uppercase tracking-wider text-slate-400">Order Reference</span>
+                <h2 class="text-xl font-black text-slate-900 font-mono">#{{ order.order_id }}</h2>
+                <p class="text-xs text-slate-400 font-medium">Placed on {{ order.created_at|date:"d M Y, h:i A" }}</p>
+            </div>
+            <div>
+                <span class="px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider {% if order.status == 'DELIVERED' %}bg-emerald-100 text-emerald-800{% elif order.status == 'CANCELLED' %}bg-rose-100 text-rose-800{% else %}bg-amber-100 text-amber-800{% endif %}">
+                    Status: {{ order.get_status_display }}
+                </span>
+            </div>
+        </div>
+
+        <!-- Tracking Visual Stepper -->
+        <div class="py-4 border-b border-slate-100">
+            <div class="grid grid-cols-3 gap-2 text-center">
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center text-base font-bold shadow-md shadow-emerald-600/20">✓</div>
+                    <span class="text-xs font-bold text-slate-900 mt-2">Reserved</span>
+                    <span class="text-[10px] text-slate-400">Order Placed</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full {% if order.status == 'ON_ROUTE' or order.status == 'DELIVERED' %}bg-emerald-600 text-white shadow-md shadow-emerald-600/20{% else %}bg-slate-100 text-slate-400{% endif %} flex items-center justify-center text-base font-bold">
+                        {% if order.status == 'ON_ROUTE' or order.status == 'DELIVERED' %}✓{% else %}2{% endif %}
+                    </div>
+                    <span class="text-xs font-bold {% if order.status == 'ON_ROUTE' or order.status == 'DELIVERED' %}text-slate-900{% else %}text-slate-400{% endif %} mt-2">On Route</span>
+                    <span class="text-[10px] text-slate-400">Thela Moving</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full {% if order.status == 'DELIVERED' %}bg-emerald-600 text-white shadow-md shadow-emerald-600/20{% else %}bg-slate-100 text-slate-400{% endif %} flex items-center justify-center text-base font-bold">
+                        {% if order.status == 'DELIVERED' %}✓{% else %}3{% endif %}
+                    </div>
+                    <span class="text-xs font-bold {% if order.status == 'DELIVERED' %}text-slate-900{% else %}text-slate-400{% endif %} mt-2">Delivered</span>
+                    <span class="text-[10px] text-slate-400">Paid & Done</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 space-y-2">
+                <span class="font-black text-slate-400 uppercase tracking-wider text-[10px]">Vendor & Route Information</span>
+                <div class="font-black text-slate-900 text-sm">{{ order.vendor.business_name }}</div>
+                <div class="text-slate-600 font-medium">📍 {{ order.vendor.area_name }}, {{ order.vendor.city }}</div>
+                <div class="text-emerald-700 font-bold">⏰ Scheduled Slot: {{ order.delivery_slot }}</div>
+            </div>
+
+            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 space-y-2">
+                <span class="font-black text-slate-400 uppercase tracking-wider text-[10px]">Delivery & Payment Details</span>
+                <div class="font-black text-slate-900 text-sm">{{ order.customer_name }} ({{ order.customer_phone }})</div>
+                <div class="text-slate-600 font-medium">🏠 {{ order.delivery_address }}</div>
+                <div class="text-slate-700 font-bold">Payment Method: <span class="text-emerald-700">{{ order.get_payment_method_display }}</span></div>
+            </div>
+        </div>
+
+        <!-- Items Breakdown -->
+        <div>
+            <h3 class="font-black text-slate-900 text-sm mb-3">Reserved Thela Items</h3>
+            <div class="divide-y divide-slate-100 border border-slate-100 rounded-2xl overflow-hidden text-xs">
+                {% for item in items %}
+                <div class="p-3.5 flex justify-between items-center bg-white hover:bg-slate-50/50 transition">
+                    <div>
+                        <div class="font-extrabold text-slate-900">{{ item.product_name }}</div>
+                        <div class="text-slate-400 text-[10px] font-medium">{{ item.quantity }} {{ item.unit }} x ₹{{ item.unit_price }}</div>
+                    </div>
+                    <span class="font-black text-slate-900">₹{{ item.subtotal }}</span>
+                </div>
+                {% endfor %}
+                <div class="p-4 bg-slate-50 flex justify-between items-center font-black text-sm text-slate-900 border-t border-slate-100">
+                    <span>Total Amount Due on Delivery</span>
+                    <span class="text-emerald-700 text-lg font-black">₹{{ order.total_amount }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center pt-4">
+            <a href="/" class="text-xs font-black text-emerald-700 hover:underline inline-flex items-center gap-1">
+                <span>←</span>
+                <span>Explore More Neighborhood Vendors</span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

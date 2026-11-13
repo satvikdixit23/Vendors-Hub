@@ -1,0 +1,797 @@
+[
+{
+  "model": "sessions.session",
+  "pk": "7fcp6mzq2sfx1kdssxbm3j3uvhnz8h3e",
+  "fields": {
+    "session_data": ".eJxVjDkOwjAQAP-yNbLwvU5JnzdYXh84gGwpTirE31GkFNDOjOYNPuxb9fvIq18STMDh8ssoxGduh0iP0O6dxd62dSF2JOy0g8095dftbP8GNYwKE7jouEQUSRkk45CE1LJwdNYIiYHHbFzQNhMlpJLQSl3IKKc4v6KJFj5fvn03Dw:1x6XL6:nE46l1L9-5_YiZLAci8-edObo-_K-h0iqZHJB2iAuv4",
+    "expire_date": "2026-09-29T17:53:04.835Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "amuu0dtn3d47dwb2rx9zdwqn71zdb4mp",
+  "fields": {
+    "session_data": ".eJxVjDEOgzAMAP_iuYoSEmLD2L1vQIltCm0VJAJT1b9XSAztene6Nwxp36Zhr7oOs0APHi6_LCd-ajmEPFK5L4aXsq1zNkdiTlvNbRF9Xc_2bzClOkEPAW22ziGJZ0fRNxobbikjqUrSFP2ISIFzHDvXslDAQGMIKM5K0wl8vs8BN4o:1xM0m0:TlRp81Qw1AJx-dEfpmuzqdezrECc4w-6TD_yDrOr9_E",
+    "expire_date": "2026-11-11T10:20:48.151Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "j0fxd0omm9uarh5xaq6c4fhedcqwcew3",
+  "fields": {
+    "session_data": ".eJxVjDkOwjAQAP-yNbLwvU5JnzdYXh84gGwpTirE31GkFNDOjOYNPuxb9fvIq18STMDh8ssoxGduh0iP0O6dxd62dSF2JOy0g8095dftbP8GNYwKE7jouEQUSRkk45CE1LJwdNYIiYHHbFzQNhMlpJLQSl3IKKc4v6KJFj5fvn03Dw:1x78Zz:mfYFIK12gEscyzO_EVmR1A1sFPosvM1RmpglC-vhfXg",
+    "expire_date": "2026-10-01T09:38:55.074Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "onbmjf62h64fziyqt57euvi0mjx2ycfn",
+  "fields": {
+    "session_data": ".eJxVjLsOgkAQAP9la3O5N0hpzzeQ3b1dQQ0kHFTGfzckFNrOTOYNA-7bOOxV1mEq0IGHyy8j5KfMhygPnO-L4WXe1onMkZjTVtMvRV63s_0bjFhH6MBlp0mblnLhICGz2pK4aTlmFR-D1eTQUWS1-YqkpN6HiJSEKFFL8PkC-IE45Q:1x6XAs:Bwz3novaOpemwpOEBeS7HF_6CGG5CSW3tlZumRExVLI",
+    "expire_date": "2026-09-29T17:42:30.572Z"
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$BTIaJ0fiQfI1RysrJ6sJfa$gCkWwTRX/Ejt7HnwSnjFbrXyPaINa74rlv34bVrSTyM=",
+    "last_login": "2026-09-17T09:38:55.061Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@vendorshub.in",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-09-14T04:46:58.251Z",
+    "user_type": "CUSTOMER",
+    "phone": null,
+    "address": null,
+    "firebase_uid": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$u7UG4KW0YDcwFy8lQ2s0vM$rb+kbGxIqUHeULQ6ZMdWqhrckvyN6ki5rM4fGMM2GWo=",
+    "last_login": "2026-09-15T17:51:57.309Z",
+    "is_superuser": false,
+    "username": "customer_pooja",
+    "first_name": "Pooja",
+    "last_name": "Sharma",
+    "email": "pooja@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-14T04:46:58.577Z",
+    "user_type": "CUSTOMER",
+    "phone": "9876543210",
+    "address": "Flat 204, Shanti Apartments, Gali No. 4, Janakpuri",
+    "firebase_uid": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$xj9VVCHWvtSRum6Z261bCN$4Mc9ooYVX4RQchmKjWuS1c7m/fr7mNQ6NxYtZ1ZcRjw=",
+    "last_login": "2026-10-28T10:20:48.142Z",
+    "is_superuser": false,
+    "username": "vendor_ramesh",
+    "first_name": "Ramesh",
+    "last_name": "Kumar",
+    "email": "ramesh.sabzi@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-14T04:46:59.078Z",
+    "user_type": "VENDOR",
+    "phone": "9811223344",
+    "address": null,
+    "firebase_uid": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$1WMIZ9FoDbChK55dtXS7zI$pG4IsjsDzys3Dm9iIDwrUrOuo6uo6PgtueQB9LNSLOc=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "vendor_suresh",
+    "first_name": "Suresh",
+    "last_name": "Gupta",
+    "email": "suresh.fal@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-14T04:46:59.491Z",
+    "user_type": "VENDOR",
+    "phone": "9899112233",
+    "address": null,
+    "firebase_uid": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$P7BnLg6gTPtSDiKXhmes3d$mJo7bnr99IsMm4hRwVKV2KoarSPQYbyGpSk+CztEd9g=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "vendor_ramdas",
+    "first_name": "Ramdas",
+    "last_name": "Prajapati",
+    "email": "ramdas.pottery@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-14T04:46:59.947Z",
+    "user_type": "VENDOR",
+    "phone": "9871122334",
+    "address": null,
+    "firebase_uid": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$FLNPoHvq7VEAauxnZHIgXp$+WzXLldyK/mxFtZJviBM/y4XWN/+ij715jmPU3i2YRw=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "vendor_shyam",
+    "first_name": "Shyam",
+    "last_name": "Lal",
+    "email": "shyam.phool@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-14T04:47:00.393Z",
+    "user_type": "VENDOR",
+    "phone": "9810998877",
+    "address": null,
+    "firebase_uid": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$SC1w8vmEFKdMqRHjzDm7Pc$2x9/hQvL+brISPf5/d/FZh0AE+9kS7n/SMxioL7hwNc=",
+    "last_login": "2026-09-15T17:50:44.490Z",
+    "is_superuser": false,
+    "username": "Kratik_Doodh",
+    "first_name": "Kratik",
+    "last_name": "Yadav",
+    "email": "satvikdixit.pvt@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-15T17:50:43.782Z",
+    "user_type": "VENDOR",
+    "phone": "08577978897",
+    "address": null,
+    "firebase_uid": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "vendors.vendorprofile",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "vendor_ramesh"
+    ],
+    "business_name": "Ramesh Desi Sabzi Bhandar",
+    "category": "SABZI",
+    "phone": "9811223344",
+    "upi_id": "rameshsabzi@upi",
+    "vehicle_type": "THELA",
+    "city": "New Delhi",
+    "area_name": "Janakpuri Block B, Gali 1 to 9",
+    "pincode": "110058",
+    "route_description": "Shuruat Mandir Mod -> Gali No. 1 -> Chungi Road -> DDA Community Park -> Gali No. 8 & 9 Chowk",
+    "route_coordinates": "[[28.6219, 77.0878], [28.6235, 77.0895], [28.625, 77.0912], [28.6268, 77.089], [28.6285, 77.0872]]",
+    "morning_slot": "7:00 AM - 10:30 AM",
+    "evening_slot": "5:00 PM - 7:30 PM",
+    "is_active_today": false,
+    "status_text": "🥦 Abhi Gali No. 3 mein taaza tamatar aur gobhi lekar pahunch rahe hain!",
+    "is_promoted": true,
+    "promotion_plan": "Mohalla Star",
+    "promotion_expires_at": "2026-10-09T04:46:59.448Z",
+    "rating": "4.9",
+    "total_orders": 142,
+    "created_at": "2026-09-14T04:46:59.449Z"
+  }
+},
+{
+  "model": "vendors.vendorprofile",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "vendor_suresh"
+    ],
+    "business_name": "Suresh Fresh Fal Thela",
+    "category": "FRUITS",
+    "phone": "9899112233",
+    "upi_id": "sureshfal@okaxis",
+    "vehicle_type": "CYCLE",
+    "city": "New Delhi",
+    "area_name": "Janakpuri C-Block & District Centre",
+    "pincode": "110058",
+    "route_description": "Metro Gate 2 -> C Block Gate 1 -> Mother Dairy Chowk -> Pocket 3 Residents",
+    "route_coordinates": "[[28.629, 77.082], [28.631, 77.0845], [28.633, 77.087], [28.6345, 77.089]]",
+    "morning_slot": "8:00 AM - 11:30 AM",
+    "evening_slot": "4:00 PM - 8:00 PM",
+    "is_active_today": true,
+    "status_text": "🍎 Shimla ke taaza seb aur kela ready hain!",
+    "is_promoted": true,
+    "promotion_plan": "Gali Starter",
+    "promotion_expires_at": "2026-09-20T04:46:59.891Z",
+    "rating": "4.8",
+    "total_orders": 98,
+    "created_at": "2026-09-14T04:46:59.892Z"
+  }
+},
+{
+  "model": "vendors.vendorprofile",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "vendor_ramdas"
+    ],
+    "business_name": "Ramdas Mitti Ke Bartan & Matke",
+    "category": "POTTERY",
+    "phone": "9871122334",
+    "upi_id": "ramdas@paytm",
+    "vehicle_type": "THELA",
+    "city": "New Delhi",
+    "area_name": "Janakpuri & Tilak Nagar",
+    "pincode": "110058",
+    "route_description": "Shani Mandir -> Gali 5 -> Old Post Office lane -> Gurudwara Chowk",
+    "route_coordinates": "[[28.636, 77.092], [28.638, 77.094], [28.6395, 77.097]]",
+    "morning_slot": "9:00 AM - 1:00 PM",
+    "evening_slot": "3:30 PM - 6:30 PM",
+    "is_active_today": true,
+    "status_text": "🪴 Shuddh mitti ke thande paani wale matke aur handi available!",
+    "is_promoted": false,
+    "promotion_plan": "None",
+    "promotion_expires_at": null,
+    "rating": "4.7",
+    "total_orders": 53,
+    "created_at": "2026-09-14T04:47:00.365Z"
+  }
+},
+{
+  "model": "vendors.vendorprofile",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "vendor_shyam"
+    ],
+    "business_name": "Shyam Mandir Phool & Pooja Bhandar",
+    "category": "FLOWERS",
+    "phone": "9810998877",
+    "upi_id": "shyamphool@upi",
+    "vehicle_type": "CYCLE",
+    "city": "New Delhi",
+    "area_name": "Janakpuri Mandir Marg & Colony Galis",
+    "pincode": "110058",
+    "route_description": "Hanuman Mandir lane -> Shiv Mandir -> B-Block Galis 1 to 6 -> Central Park",
+    "route_coordinates": "[]",
+    "morning_slot": "6:00 AM - 9:00 AM",
+    "evening_slot": "5:30 PM - 7:30 PM",
+    "is_active_today": true,
+    "status_text": "🌸 Daily Pooja ke taaza genda aur gulab phool ghar-ghar delivery!",
+    "is_promoted": false,
+    "promotion_plan": "None",
+    "promotion_expires_at": null,
+    "rating": "4.9",
+    "total_orders": 210,
+    "created_at": "2026-09-14T04:47:00.793Z"
+  }
+},
+{
+  "model": "vendors.vendorprofile",
+  "pk": 5,
+  "fields": {
+    "user": [
+      "Kratik_Doodh"
+    ],
+    "business_name": "PSIT",
+    "category": "DAIRY",
+    "phone": "08577978897",
+    "upi_id": null,
+    "vehicle_type": "CYCLE",
+    "city": "Kanpur",
+    "area_name": "Darshan Purwa",
+    "pincode": "110058",
+    "route_description": "Bagh pur -> PSIT",
+    "route_coordinates": "[]",
+    "morning_slot": "7:00 AM - 10:30 AM",
+    "evening_slot": "4:30 PM - 7:30 PM",
+    "is_active_today": true,
+    "status_text": "Taking morning round in Gali 3-5",
+    "is_promoted": false,
+    "promotion_plan": "None",
+    "promotion_expires_at": null,
+    "rating": "4.8",
+    "total_orders": 0,
+    "created_at": "2026-09-15T17:50:44.477Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 1,
+  "fields": {
+    "vendor": 1,
+    "name": "Desi Lal Tamatar (Tomato)",
+    "hindi_name": "लाल टमाटर",
+    "price": "35.00",
+    "unit": "kg",
+    "is_available": true,
+    "emoji_icon": "🍅",
+    "description": "Ekdum taaza local khet ka tamatar",
+    "created_at": "2026-09-14T04:46:59.455Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 2,
+  "fields": {
+    "vendor": 1,
+    "name": "Pahadi Aloo (Potatoes)",
+    "hindi_name": "पहाड़ी नया आलू",
+    "price": "25.00",
+    "unit": "kg",
+    "is_available": true,
+    "emoji_icon": "🥔",
+    "description": "Bina mitti ka saaf pahadi aloo",
+    "created_at": "2026-09-14T04:46:59.460Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 3,
+  "fields": {
+    "vendor": 1,
+    "name": "Nashik Pyaaz (Onions)",
+    "hindi_name": "नासिक प्याज",
+    "price": "40.00",
+    "unit": "kg",
+    "is_available": true,
+    "emoji_icon": "🧅",
+    "description": "Medium size pakka pyaaz",
+    "created_at": "2026-09-14T04:46:59.467Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 4,
+  "fields": {
+    "vendor": 1,
+    "name": "Taaza Hara Dhaniya & Mirch Combo",
+    "hindi_name": "धनिया + हरी मिर्च",
+    "price": "15.00",
+    "unit": "bundle",
+    "is_available": true,
+    "emoji_icon": "🌿",
+    "description": "Gaddi dhaniya aur 100g teekhi hari mirch",
+    "created_at": "2026-09-14T04:46:59.473Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 5,
+  "fields": {
+    "vendor": 1,
+    "name": "Hari Bhindi (Lady Finger)",
+    "hindi_name": "ताज़ा भिंडी",
+    "price": "45.00",
+    "unit": "kg",
+    "is_available": true,
+    "emoji_icon": "🌱",
+    "description": "Chhoti naram bina beej wali bhindi",
+    "created_at": "2026-09-14T04:46:59.477Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 6,
+  "fields": {
+    "vendor": 1,
+    "name": "Palak Saag (Spinach)",
+    "hindi_name": "देसी पालक",
+    "price": "20.00",
+    "unit": "bundle",
+    "is_available": true,
+    "emoji_icon": "🥬",
+    "description": "Khet se tooti hui hari patti",
+    "created_at": "2026-09-14T04:46:59.481Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 7,
+  "fields": {
+    "vendor": 1,
+    "name": "Phool Gobhi (Cauliflower)",
+    "hindi_name": "फूल गोभी",
+    "price": "30.00",
+    "unit": "piece",
+    "is_available": true,
+    "emoji_icon": "🥦",
+    "description": "Bada safed phool",
+    "created_at": "2026-09-14T04:46:59.486Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 8,
+  "fields": {
+    "vendor": 2,
+    "name": "Shimla Red Royal Seb (Apples)",
+    "hindi_name": "सेब",
+    "price": "120.00",
+    "unit": "kg",
+    "is_available": true,
+    "emoji_icon": "🍎",
+    "description": "Sweet and crunchy handpicked apples",
+    "created_at": "2026-09-14T04:46:59.901Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 9,
+  "fields": {
+    "vendor": 2,
+    "name": "Robusta Kela (Bananas)",
+    "hindi_name": "पका केला",
+    "price": "50.00",
+    "unit": "dozen",
+    "is_available": true,
+    "emoji_icon": "🍌",
+    "description": "Fresh yellow ripe bananas",
+    "created_at": "2026-09-14T04:46:59.907Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 10,
+  "fields": {
+    "vendor": 2,
+    "name": "Nagpur Santra (Oranges)",
+    "hindi_name": "रसीला संतरा",
+    "price": "70.00",
+    "unit": "kg",
+    "is_available": true,
+    "emoji_icon": "🍊",
+    "description": "Juicy sweet seasonal oranges",
+    "created_at": "2026-09-14T04:46:59.914Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 11,
+  "fields": {
+    "vendor": 2,
+    "name": "Anar Kandhari (Pomegranate)",
+    "hindi_name": "अनार",
+    "price": "140.00",
+    "unit": "kg",
+    "is_available": true,
+    "emoji_icon": "🥭",
+    "description": "Deep red sweet seeds",
+    "created_at": "2026-09-14T04:46:59.925Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 12,
+  "fields": {
+    "vendor": 2,
+    "name": "Taaza Papita (Papaya)",
+    "hindi_name": "मीठा पपीता",
+    "price": "45.00",
+    "unit": "kg",
+    "is_available": true,
+    "emoji_icon": "🍈",
+    "description": "Naturally ripened papaya",
+    "created_at": "2026-09-14T04:46:59.939Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 13,
+  "fields": {
+    "vendor": 3,
+    "name": "Lal Mitti Thanda Paani Matka with Tap",
+    "hindi_name": "मिट्टी का मटका नल वाला",
+    "price": "180.00",
+    "unit": "piece",
+    "is_available": true,
+    "emoji_icon": "🏺",
+    "description": "Natural terracotta clay water pot, cools water naturally",
+    "created_at": "2026-09-14T04:47:00.370Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 14,
+  "fields": {
+    "vendor": 3,
+    "name": "Chai Kulhad Set (Pack of 6)",
+    "hindi_name": "मिट्टी के कुल्हड़ (6 पीस)",
+    "price": "60.00",
+    "unit": "bundle",
+    "is_available": true,
+    "emoji_icon": "☕",
+    "description": "Eco-friendly clay tea cups for tandoori chai",
+    "created_at": "2026-09-14T04:47:00.376Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 15,
+  "fields": {
+    "vendor": 3,
+    "name": "Mitti ki Handi for Biryani & Dal",
+    "hindi_name": "मिट्टी की हांडी",
+    "price": "150.00",
+    "unit": "piece",
+    "is_available": true,
+    "emoji_icon": "🍲",
+    "description": "Safe for stove, authentic desi taste",
+    "created_at": "2026-09-14T04:47:00.382Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 16,
+  "fields": {
+    "vendor": 3,
+    "name": "Pooja Clay Diye (Pack of 12)",
+    "hindi_name": "मिट्टी के दीये",
+    "price": "40.00",
+    "unit": "packet",
+    "is_available": true,
+    "emoji_icon": "🪔",
+    "description": "Handcrafted clay lamps for daily aarti",
+    "created_at": "2026-09-14T04:47:00.388Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 17,
+  "fields": {
+    "vendor": 4,
+    "name": "Pooja Genda Phool Mala (1 Piece)",
+    "hindi_name": "गेंदा फूल माला",
+    "price": "30.00",
+    "unit": "piece",
+    "is_available": true,
+    "emoji_icon": "🌼",
+    "description": "Fresh yellow and orange marigold garland",
+    "created_at": "2026-09-14T04:47:00.800Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 18,
+  "fields": {
+    "vendor": 4,
+    "name": "Lal Gulab (Red Roses) for Pooja",
+    "hindi_name": "लाल गुलाब फूल",
+    "price": "50.00",
+    "unit": "bundle",
+    "is_available": true,
+    "emoji_icon": "🌹",
+    "description": "Pack of fresh fragrant red rose petals",
+    "created_at": "2026-09-14T04:47:00.806Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 19,
+  "fields": {
+    "vendor": 4,
+    "name": "Tulsi Patta & Belpatra Packet",
+    "hindi_name": "तुलसी और बेलपत्र",
+    "price": "20.00",
+    "unit": "packet",
+    "is_available": true,
+    "emoji_icon": "🍃",
+    "description": "Washed clean leaves for morning pooja",
+    "created_at": "2026-09-14T04:47:00.815Z"
+  }
+},
+{
+  "model": "vendors.product",
+  "pk": 20,
+  "fields": {
+    "vendor": 5,
+    "name": "Doodh",
+    "hindi_name": "Doodh",
+    "price": "75.00",
+    "unit": "kg",
+    "is_available": true,
+    "emoji_icon": "doodh",
+    "description": "",
+    "created_at": "2026-09-15T17:51:39.514Z"
+  }
+},
+{
+  "model": "vendors.promotionplan",
+  "pk": 1,
+  "fields": {
+    "name": "Gali Starter",
+    "tagline": "Ideal for new thelawalas starting in one colony",
+    "price": 49,
+    "duration_days": 7,
+    "badge_label": "⭐ Verified Gali Vendor",
+    "benefits": "Colony route highlight, Direct phone calls, 0% commission, 7 days featured",
+    "is_popular": false
+  }
+},
+{
+  "model": "vendors.promotionplan",
+  "pk": 2,
+  "fields": {
+    "name": "Mohalla Star",
+    "tagline": "Top visibility across 10-15 galis and major chowks",
+    "price": 149,
+    "duration_days": 30,
+    "badge_label": "👑 Mohalla Gold Top Vendor",
+    "benefits": "Top position in customer search, Golden crown badge, Live route tracker badge, Priority scheduled orders, WhatsApp direct connect",
+    "is_popular": true
+  }
+},
+{
+  "model": "vendors.promotionplan",
+  "pk": 3,
+  "fields": {
+    "name": "City Booster",
+    "tagline": "Complete area domination with multi-colony routes",
+    "price": 499,
+    "duration_days": 90,
+    "badge_label": "🔥 Area Champion",
+    "benefits": "Full city search highlight, Featured banner on homepage, Unlimited products, Dedicated support, SMS alerts to regular customers",
+    "is_popular": false
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 1,
+  "fields": {
+    "order_id": "VH-DEMO101",
+    "vendor": 1,
+    "customer": [
+      "customer_pooja"
+    ],
+    "customer_name": "Pooja Sharma",
+    "customer_phone": "9876543210",
+    "delivery_address": "Flat 204, Shanti Apartments, Gali No. 4",
+    "delivery_area": "Janakpuri Block B",
+    "delivery_date": "2026-09-14",
+    "delivery_slot": "Morning Round (7:30 AM - 9:00 AM)",
+    "payment_method": "COD",
+    "total_amount": "105.00",
+    "status": "ACCEPTED",
+    "special_instructions": "Please ring bell twice. Ensure tomatoes are ripe.",
+    "created_at": "2026-09-14T04:47:00.822Z",
+    "updated_at": "2026-09-14T04:47:00.822Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 2,
+  "fields": {
+    "order_id": "VH-D4696D70",
+    "vendor": 5,
+    "customer": [
+      "customer_pooja"
+    ],
+    "customer_name": "Pooja",
+    "customer_phone": "9876543210",
+    "delivery_address": "Bhauti",
+    "delivery_area": "Darshan Purwa",
+    "delivery_date": "2026-09-15",
+    "delivery_slot": "4:30 PM - 7:30 PM",
+    "payment_method": "COD",
+    "total_amount": "75.00",
+    "status": "PENDING",
+    "special_instructions": "",
+    "created_at": "2026-09-15T17:52:35.256Z",
+    "updated_at": "2026-09-15T17:52:35.256Z"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 3,
+  "fields": {
+    "order_id": "VH-9792BAB0",
+    "vendor": 5,
+    "customer": null,
+    "customer_name": "Satvik Dixit",
+    "customer_phone": "08577978897",
+    "delivery_address": "Bhauti",
+    "delivery_area": "Darshan Purwa",
+    "delivery_date": "2026-10-13",
+    "delivery_slot": "4:30 PM - 7:30 PM",
+    "payment_method": "COD",
+    "total_amount": "75.00",
+    "status": "PENDING",
+    "special_instructions": "",
+    "created_at": "2026-10-13T09:16:37.801Z",
+    "updated_at": "2026-10-13T09:16:37.801Z"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 1,
+  "fields": {
+    "order": 1,
+    "product": 1,
+    "product_name": "Desi Lal Tamatar (Tomato)",
+    "unit_price": "35.00",
+    "unit": "kg",
+    "quantity": "2.00",
+    "subtotal": "70.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 2,
+  "fields": {
+    "order": 1,
+    "product": 4,
+    "product_name": "Taaza Hara Dhaniya & Mirch Combo",
+    "unit_price": "15.00",
+    "unit": "bundle",
+    "quantity": "1.00",
+    "subtotal": "15.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 3,
+  "fields": {
+    "order": 1,
+    "product": 7,
+    "product_name": "Phool Gobhi (Cauliflower)",
+    "unit_price": "20.00",
+    "unit": "piece",
+    "quantity": "1.00",
+    "subtotal": "20.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 4,
+  "fields": {
+    "order": 2,
+    "product": 20,
+    "product_name": "Doodh",
+    "unit_price": "75.00",
+    "unit": "kg",
+    "quantity": "1.00",
+    "subtotal": "75.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 5,
+  "fields": {
+    "order": 3,
+    "product": 20,
+    "product_name": "Doodh",
+    "unit_price": "75.00",
+    "unit": "kg",
+    "quantity": "1.00",
+    "subtotal": "75.00"
+  }
+}
+]

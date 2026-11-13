@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}Cart Product Inventory - {{ vendor.business_name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24 sm:pb-12">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+        <div>
+            <div class="flex items-center gap-2 mb-1.5">
+                <a href="{% url 'vendor_dashboard' %}" class="text-xs font-bold text-emerald-700 hover:underline flex items-center gap-1">
+                    <span>←</span>
+                    <span>Back to Partner Console</span>
+                </a>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Thela Product Inventory</h1>
+            <p class="text-xs sm:text-sm text-slate-500">Manage daily fresh stock prices, units, and live availability</p>
+        </div>
+
+        <!-- 1-Click Auto Stock Button -->
+        <a href="{% url 'vendor_quick_stock' %}" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs shadow-md shadow-amber-500/20 transition active:scale-95">
+            <span>⚡</span>
+            <span>Auto-Stock {{ vendor.get_category_display }} Items</span>
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- Left: Add New Product Form -->
+        <div class="lg:col-span-5 xl:col-span-4">
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm sticky top-24">
+                <h3 class="text-base font-black text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-sm">➕</span>
+                    <span>Add New Stock Item</span>
+                </h3>
+
+                <form method="POST" action="{% url 'vendor_product_manager' %}" class="space-y-4 text-xs">
+                    {% csrf_token %}
+                    <input type="hidden" name="add_product" value="1">
+
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Item Name (English)</label>
+                        <input type="text" name="name" required placeholder="e.g. Fresh Red Tomatoes" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50">
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Hindi / Local Name</label>
+                        <input type="text" name="hindi_name" placeholder="e.g. देशी लाल टमाटर" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Selling Price (₹)</label>
+                            <input type="number" step="0.5" name="price" required placeholder="40" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50 font-bold">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Unit</label>
+                            <select name="unit" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white font-medium">
+                                {% for u_key, u_label in unit_choices %}
+                                    <option value="{{ u_key }}">{{ u_label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Emoji Icon</label>
+                        <input type="text" name="emoji_icon" value="🛒" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50 text-base">
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Short Description (Optional)</label>
+                        <textarea name="description" rows="2" placeholder="e.g. Freshly sourced from wholesale mandi today" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-slate-50/50"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-2xl shadow-md shadow-emerald-600/20 transition active:scale-98 cursor-pointer">
+                        Add to Thela Inventory
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right: Current Inventory Stock List -->
+        <div class="lg:col-span-7 xl:col-span-8">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <h3 class="text-base font-black text-slate-900">Current Stock Listed ({{ products.count }})</h3>
+                        <p class="text-xs text-slate-400">Click in-stock toggle to hide sold-out items instantly</p>
+                    </div>
+                </div>
+
+                {% if products %}
+                <div class="divide-y divide-slate-100">
+                    {% for p in products %}
+                    <div class="py-4 flex items-center justify-between gap-4 group">
+                        <div class="flex items-center gap-3.5">
+                            <span class="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-2xl group-hover:scale-105 transition shadow-xs">
+                                {{ p.emoji_icon }}
+                            </span>
+                            <div>
+                                <h4 class="font-extrabold text-slate-900 text-sm group-hover:text-emerald-700 transition">{{ p.name }}</h4>
+                                <div class="text-xs text-slate-500 font-medium mt-0.5 flex items-center gap-1.5">
+                                    {% if p.hindi_name %}<span class="text-emerald-700 font-bold">{{ p.hindi_name }}</span> <span>•</span>{% endif %}
+                                    <span class="font-black text-slate-900">₹{{ p.price }}</span>
+                                    <span>/ {{ p.unit }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <a href="{% url 'vendor_toggle_product' p.id %}" class="px-3.5 py-1.5 rounded-xl text-xs font-black transition shadow-xs {% if p.is_available %}bg-emerald-100 text-emerald-800 hover:bg-emerald-200{% else %}bg-slate-100 text-slate-500 hover:bg-slate-200{% endif %}">
+                                {% if p.is_available %}✓ In Stock{% else %}✕ Sold Out{% endif %}
+                            </a>
+                            <a href="{% url 'vendor_delete_product' p.id %}" onclick="return confirm('Remove this product?')" class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-100 flex items-center justify-center text-xs font-bold transition">
+                                🗑️
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-16 text-slate-400">
+                    <span class="text-5xl block mb-2 opacity-70">🛒</span>
+                    <p class="text-sm font-extrabold text-slate-800">Your thela has no items yet</p>
+                    <p class="text-xs text-slate-400 mt-1 mb-4">Populate standard vegetables, fruits or items with one click</p>
+                    <a href="{% url 'vendor_quick_stock' %}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-black text-xs shadow-md">
+                        <span>⚡ 1-Click Auto Stock</span>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

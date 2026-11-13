@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Boost & Promote Thela - {{ vendor.business_name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24 sm:pb-12">
+    <div class="flex items-center gap-2 mb-2">
+        <a href="{% url 'vendor_dashboard' %}" class="text-xs font-bold text-emerald-700 hover:underline flex items-center gap-1">
+            <span>←</span>
+            <span>Back to Partner Console</span>
+        </a>
+    </div>
+    <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-[11px] font-black uppercase tracking-wider text-amber-700 bg-amber-100 px-3.5 py-1 rounded-full border border-amber-300">
+            ⭐ Supercharge Cart Discovery
+        </span>
+        <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight mt-3">Promote Your Cart on Top</h1>
+        <p class="text-xs sm:text-sm text-slate-500 mt-2">Get featured on the homepage carousel, highlighted on map routes with gold badges, and appear first in customer searches.</p>
+    </div>
+
+    {% if vendor.is_currently_promoted %}
+    <div class="max-w-xl mx-auto mb-10 bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-300 rounded-3xl p-6 text-center shadow-md">
+        <span class="text-4xl block mb-2">🎉</span>
+        <h3 class="text-lg font-black text-amber-950">Your Thela is Currently Featured!</h3>
+        <p class="text-xs text-amber-800 mt-1 font-semibold">
+            Active Plan: <strong>{{ vendor.promotion_plan }}</strong> • Expires on <strong>{{ vendor.promotion_expires_at|date:"d M Y" }}</strong>
+        </p>
+    </div>
+    {% endif %}
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto items-stretch">
+        {% for plan in plans %}
+        <div class="bg-white rounded-3xl p-7 border {% if forloop.counter == 2 %}border-amber-400 ring-4 ring-amber-100 shadow-xl{% else %}border-slate-200 shadow-xs{% endif %} flex flex-col justify-between relative overflow-hidden group">
+            {% if forloop.counter == 2 %}
+            <div class="absolute top-0 right-0 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 text-[10px] font-black uppercase tracking-wider px-4 py-1 rounded-bl-xl shadow-xs">
+                Most Popular
+            </div>
+            {% endif %}
+
+            <div>
+                <span class="text-[10px] font-black uppercase tracking-wider text-slate-400">{{ plan.duration_days }} Days Validity</span>
+                <h3 class="text-xl font-black text-slate-900 mt-1">{{ plan.name }}</h3>
+                <div class="mt-4 flex items-baseline gap-1">
+                    <span class="text-4xl font-black text-slate-900">₹{{ plan.price }}</span>
+                    <span class="text-xs text-slate-400 font-medium">/ {{ plan.duration_days }} days</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-3 leading-relaxed">{{ plan.description }}</p>
+
+                <div class="mt-6 pt-6 border-t border-slate-100 space-y-3 text-xs text-slate-700 font-medium">
+                    <div class="flex items-center gap-2.5">
+                        <span class="text-emerald-600 font-black">✓</span>
+                        <span>Top placement in neighborhood search</span>
+                    </div>
+                    <div class="flex items-center gap-2.5">
+                        <span class="text-emerald-600 font-black">✓</span>
+                        <span>Gold featured pin on Interactive Route Map</span>
+                    </div>
+                    <div class="flex items-center gap-2.5">
+                        <span class="text-emerald-600 font-black">✓</span>
+                        <span>Hero Carousel banner appearance</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-4">
+                <a href="{% url 'vendor_activate_plan' plan.id %}" class="w-full block py-3.5 text-center rounded-2xl text-xs font-black shadow-md transition active:scale-95 {% if forloop.counter == 2 %}bg-amber-500 hover:bg-amber-600 text-slate-950 shadow-amber-500/20{% else %}bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20{% endif %}">
+                    Activate Plan (₹{{ plan.price }})
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

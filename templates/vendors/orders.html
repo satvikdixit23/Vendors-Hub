@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Orders - {{ vendor.business_name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24 sm:pb-12">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+        <div>
+            <div class="flex items-center gap-2 mb-1.5">
+                <a href="{% url 'vendor_dashboard' %}" class="text-xs font-bold text-emerald-700 hover:underline flex items-center gap-1">
+                    <span>←</span>
+                    <span>Back to Partner Console</span>
+                </a>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Customer Pre-Orders</h1>
+            <p class="text-xs sm:text-sm text-slate-500">Track and update delivery statuses of customer scheduled orders</p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap gap-2">
+            <a href="{% url 'vendor_orders' %}" class="px-3.5 py-2 rounded-xl text-xs font-black transition shadow-xs {% if not current_filter %}bg-emerald-600 text-white{% else %}bg-white text-slate-700 hover:bg-slate-50 border border-slate-200{% endif %}">
+                All ({{ vendor.orders.count }})
+            </a>
+            {% for s_key, s_label in status_choices %}
+                <a href="?status={{ s_key }}" class="px-3.5 py-2 rounded-xl text-xs font-black transition shadow-xs {% if current_filter == s_key %}bg-emerald-600 text-white{% else %}bg-white text-slate-700 hover:bg-slate-50 border border-slate-200{% endif %}">
+                    {{ s_label }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm">
+        {% if orders %}
+        <div class="space-y-4">
+            {% for order in orders %}
+            <div class="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:border-emerald-200 hover:shadow-sm transition flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5">
+                <div class="space-y-1.5 text-xs flex-1">
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <span class="font-mono font-black text-emerald-800 text-sm">#{{ order.order_id }}</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider {% if order.status == 'DELIVERED' %}bg-emerald-100 text-emerald-800{% elif order.status == 'CANCELLED' %}bg-rose-100 text-rose-800{% else %}bg-amber-100 text-amber-800{% endif %}">
+                            {{ order.get_status_display }}
+                        </span>
+                        <span class="text-slate-400 font-medium">• {{ order.created_at|timesince }} ago</span>
+                    </div>
+
+                    <div class="font-black text-slate-900 text-sm flex items-center gap-2">
+                        <span>{{ order.customer_name }}</span>
+                        <a href="tel:{{ order.customer_phone }}" class="text-emerald-700 font-bold hover:underline">📞 {{ order.customer_phone }}</a>
+                        <a href="https://wa.me/91{{ order.customer_phone }}" target="_blank" class="text-emerald-600 font-bold hover:underline">💬 WhatsApp</a>
+                    </div>
+                    
+                    <div class="text-slate-600 font-medium">📍 {{ order.delivery_address }}</div>
+                    <div class="text-emerald-700 font-bold">⏰ Preferred Slot: {{ order.delivery_slot }} • Date: {{ order.delivery_date }}</div>
+                    
+                    <div class="pt-2 text-[11px] text-slate-600 flex flex-wrap gap-1.5">
+                        <span class="font-bold text-slate-800">Items:</span>
+                        {% for item in order.items.all %}
+                            <span class="bg-white px-2 py-0.5 rounded-lg border border-slate-200 text-slate-800 font-semibold">{{ item.product_name }} ({{ item.quantity }} {{ item.unit }})</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full lg:w-auto pt-3 lg:pt-0 border-t lg:border-t-0 border-slate-100">
+                    <div class="text-left sm:text-right">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Total ({{ order.get_payment_method_display }})</span>
+                        <div class="text-xl font-black text-slate-900">₹{{ order.total_amount }}</div>
+                    </div>
+
+                    <!-- Status Update Form -->
+                    <form method="POST" action="{% url 'vendor_update_order_status' order.id %}" class="flex items-center gap-2">
+                        {% csrf_token %}
+                        <select name="status" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs">
+                            {% for s_key, s_label in status_choices %}
+                                <option value="{{ s_key }}" {% if order.status == s_key %}selected{% endif %}>{{ s_label }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs shadow-md shadow-emerald-600/20 transition active:scale-95 cursor-pointer">
+                            Update
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-16 text-slate-400">
+            <span class="text-5xl block mb-2 opacity-70">📬</span>
+            <p class="text-sm font-extrabold text-slate-800">No orders found for this filter</p>
+            <p class="text-xs text-slate-400 mt-1">Check other status tabs or explore incoming pre-orders</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

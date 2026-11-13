@@ -1,0 +1,340 @@
+{% extends 'base.html' %}
+
+{% block title %}Vendor's Hub - Direct Gali Thela Orders in 15-30 Mins{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12 space-y-8">
+
+    <!-- Zepto/Blinkit Style Flash Delivery Banner -->
+    <div class="bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-800 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 opacity-10 text-[180px] pointer-events-none select-none font-black">
+            🛒
+        </div>
+        
+        <div class="relative z-10 max-w-2xl space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-emerald-100 text-xs font-black uppercase tracking-wider border border-white/20">
+                <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                <span>Hyperlocal Street Commerce</span>
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+                Fresh From Your Gali's <br>
+                <span class="text-amber-300">Local Sabziwala & Thelas</span>
+            </h1>
+
+            <p class="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-medium">
+                Live roaming carts in your mohalla. Pre-order fresh vegetables, fruits, clay pottery, and puja flowers with <strong class="text-white underline decoration-amber-300">₹0 commission</strong> and direct payment on delivery.
+            </p>
+
+            <!-- Quick Metrics Grid -->
+            <div class="grid grid-cols-3 gap-3 pt-2 max-w-md">
+                <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-2.5 text-center">
+                    <div class="text-xl font-black text-amber-300">⚡ 15-30m</div>
+                    <div class="text-[10px] text-emerald-100 font-bold uppercase">Gali Arrival</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-2.5 text-center">
+                    <div class="text-xl font-black text-white">₹0</div>
+                    <div class="text-[10px] text-emerald-100 font-bold uppercase">Platform Fee</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-2.5 text-center">
+                    <div class="text-xl font-black text-emerald-300">100%</div>
+                    <div class="text-[10px] text-emerald-100 font-bold uppercase">Direct to Vendor</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Sliding Quick Pills (Zepto / Blinkit Quick Filters) -->
+    <div>
+        <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-black uppercase tracking-wider text-slate-700 flex items-center gap-2">
+                <span>Explore by Category</span>
+            </h3>
+            <span class="text-xs text-emerald-600 font-bold hidden sm:inline">Fresh stock updated daily</span>
+        </div>
+
+        <div class="flex items-center gap-3 overflow-x-auto pb-2 hide-scrollbar">
+            <a href="/#vendors-section" class="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-black transition border shadow-sm {% if not selected_category %}bg-emerald-600 text-white border-emerald-600 shadow-emerald-600/20{% else %}bg-white text-slate-700 border-slate-200 hover:border-emerald-400{% endif %}">
+                <span>🛒</span>
+                <span>All Thelas ({{ vendors|length }})</span>
+            </a>
+
+            {% for cat_key, cat_label in categories %}
+            <a href="?category={{ cat_key }}#vendors-section" class="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-black transition border shadow-sm {% if selected_category == cat_key %}bg-emerald-600 text-white border-emerald-600 shadow-emerald-600/20{% else %}bg-white text-slate-700 border-slate-200 hover:border-emerald-400{% endif %}">
+                <span>
+                    {% if 'Sabzi' in cat_label %}🥦
+                    {% elif 'Fal' in cat_label %}🍎
+                    {% elif 'Mitti' in cat_label %}🏺
+                    {% elif 'Phool' in cat_label %}🌸
+                    {% else %}🗞️{% endif %}
+                </span>
+                <span>{{ cat_label }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Promoted / Featured Thela Highlight Strip (If any active) -->
+    {% if promoted_vendors %}
+    <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-2xl p-4 text-white shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-xl">
+                ⭐
+            </div>
+            <div>
+                <span class="bg-white text-amber-900 text-[10px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider">Top Featured Thela</span>
+                <h4 class="text-base font-black">{{ promoted_vendors.0.business_name }}</h4>
+                <p class="text-xs text-amber-100 font-medium">📍 {{ promoted_vendors.0.area_name }} • Rating: ⭐ {{ promoted_vendors.0.rating }}</p>
+            </div>
+        </div>
+        <a href="{% url 'vendor_storefront' promoted_vendors.0.id %}" class="px-5 py-2 rounded-xl bg-white text-amber-900 font-extrabold text-xs hover:bg-amber-50 shadow-sm transition whitespace-nowrap">
+            Order From Featured Cart →
+        </a>
+    </div>
+    {% endif %}
+
+    <!-- Live Gali Route Map Card -->
+    <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-qc">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                    <h2 class="text-xl font-black text-slate-900">Live Neighborhood Route Tracker</h2>
+                </div>
+                <p class="text-xs text-slate-500 mt-0.5">Real-time street cart rounds passing through colonies today</p>
+            </div>
+
+            <div class="flex items-center gap-3 text-xs font-bold text-slate-600">
+                <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500 shadow-sm"></span> Active Route</span>
+                <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-500 shadow-sm"></span> Featured Thela</span>
+            </div>
+        </div>
+
+        <div id="vendorsMap" class="w-full h-80 sm:h-96 rounded-2xl border border-slate-200 z-10 shadow-inner"></div>
+    </div>
+
+    <!-- Active Thelas Quick-Commerce Grid -->
+    <div id="vendors-section" class="pt-4">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h2 class="text-2xl font-black text-slate-900 tracking-tight">Active Thelas in Your Gali</h2>
+                <p class="text-xs text-slate-500 mt-0.5">Order fresh inventory with zero commission</p>
+            </div>
+            <span class="px-3.5 py-1.5 rounded-xl bg-emerald-50 text-emerald-800 text-xs font-black border border-emerald-200">
+                {{ vendors|length }} Thelas Active
+            </span>
+        </div>
+
+        {% if vendors %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for vendor in vendors %}
+            <div class="bg-white rounded-3xl border {% if vendor.is_currently_promoted %}border-amber-400 ring-4 ring-amber-100/50 shadow-md{% else %}border-slate-200/80 shadow-qc hover:shadow-lg{% endif %} transition-all duration-200 flex flex-col justify-between overflow-hidden group">
+                
+                <!-- Card Header -->
+                <div class="p-6">
+                    <div class="flex items-start justify-between gap-3 mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center text-2xl font-bold shadow-inner group-hover:scale-105 transition">
+                                {% if vendor.category == 'SABZI' %}🥦{% elif vendor.category == 'FRUITS' %}🍎{% elif vendor.category == 'POTTERY' %}🏺{% elif vendor.category == 'FLOWERS' %}🌸{% else %}🗞️{% endif %}
+                            </div>
+                            <div>
+                                <h3 class="font-black text-slate-900 text-base leading-tight group-hover:text-emerald-700 transition">
+                                    {{ vendor.business_name }}
+                                </h3>
+                                <p class="text-[11px] font-bold text-emerald-700 mt-0.5">
+                                    {{ vendor.get_category_display }} • {{ vendor.get_vehicle_type_display }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <span class="flex items-center gap-1 bg-amber-50 text-amber-900 border border-amber-200 px-2 py-1 rounded-xl text-xs font-black">
+                            ⭐ {{ vendor.rating }}
+                        </span>
+                    </div>
+
+                    <!-- Area & Slots Pill Info -->
+                    <div class="space-y-2 text-xs text-slate-600 bg-slate-50 p-3.5 rounded-2xl border border-slate-100 mt-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-slate-400">📍</span>
+                            <span class="font-bold text-slate-800 truncate">{{ vendor.area_name }}, {{ vendor.city }}</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-[11px]">
+                            <span class="text-slate-400">⏰</span>
+                            <span class="font-semibold text-slate-700">Morning: <strong>{{ vendor.morning_slot }}</strong></span>
+                        </div>
+                        {% if vendor.status_text %}
+                        <div class="pt-1.5 border-t border-slate-200/60 text-[11px] font-medium text-emerald-800 italic">
+                            📢 "{{ vendor.status_text }}"
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Inventory Tag Pills -->
+                    <div class="mt-4">
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block mb-2">Available Products ({{ vendor.products.count }})</span>
+                        <div class="flex flex-wrap gap-1.5">
+                            {% for p in vendor.products.all|slice:":4" %}
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-100 text-slate-800 text-[11px] font-bold">
+                                    <span>{{ p.emoji_icon }}</span>
+                                    <span>{{ p.name }}</span>
+                                    <span class="text-emerald-700 font-extrabold">₹{{ p.price }}</span>
+                                </span>
+                            {% empty %}
+                                <span class="text-xs text-slate-400">Fresh stock loading...</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Footer Call-to-Action -->
+                <div class="p-4 px-6 bg-slate-50/80 border-t border-slate-100 flex items-center justify-between gap-3">
+                    <a href="tel:{{ vendor.phone }}" class="text-xs font-bold text-slate-600 hover:text-slate-900 flex items-center gap-1">
+                        <span>📞</span> Call
+                    </a>
+                    <a href="{% url 'vendor_storefront' vendor.id %}" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-2xl text-xs font-black bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-600/20 transition">
+                        <span>Shop Thela</span>
+                        <span>→</span>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-20 bg-white rounded-3xl border border-slate-200">
+            <span class="text-5xl">🥦</span>
+            <h3 class="text-base font-black text-slate-800 mt-3">No active thelas found for this filter</h3>
+            <p class="text-xs text-slate-400 mt-1">Try clearing your search query to see all city vendors.</p>
+            <a href="/" class="inline-block mt-4 text-xs font-bold text-emerald-600 hover:underline">View all thelas →</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Quick Commerce Perks Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-10 border-t border-slate-200">
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-start gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                ⚡
+            </div>
+            <div>
+                <h4 class="font-black text-slate-900 text-sm">Gali Arrival Scheduling</h4>
+                <p class="text-xs text-slate-500 mt-1">Order before your sabziwala begins their morning or evening mohalla rounds.</p>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-start gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                💵
+            </div>
+            <div>
+                <h4 class="font-black text-slate-900 text-sm">100% Direct COD & UPI</h4>
+                <p class="text-xs text-slate-500 mt-1">Zero platform deductions. Pay the vendor in cash or scan their UPI QR at your door.</p>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-start gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-800 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                🥦
+            </div>
+            <div>
+                <h4 class="font-black text-slate-900 text-sm">Direct Mandi Freshness</h4>
+                <p class="text-xs text-slate-500 mt-1">No dark stores or warehouse storage. Items come fresh straight from daily carts.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Initialize Leaflet Map
+    document.addEventListener('DOMContentLoaded', function() {
+        const mapContainer = document.getElementById('vendorsMap');
+        if (!mapContainer) return;
+
+        const vendorsData = {{ map_vendors_json|safe }};
+        let defaultLat = 28.625;
+        let defaultLng = 77.089;
+
+        const map = L.map('vendorsMap', { scrollWheelZoom: false }).setView([defaultLat, defaultLng], 14);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 20
+        }).addTo(map);
+
+        const bounds = [];
+
+        function createThelaIcon(isPromoted, category) {
+            let emoji = '🥦';
+            if (category && category.includes('Fal')) emoji = '🍎';
+            else if (category && category.includes('Mitti')) emoji = '🏺';
+            else if (category && category.includes('Phool')) emoji = '🌸';
+            else if (category && category.includes('Paper')) emoji = '🗞️';
+
+            const bgColor = isPromoted ? '#f59e0b' : '#0c831f';
+            const borderColor = isPromoted ? '#b45309' : '#085414';
+
+            return L.divIcon({
+                className: 'custom-thela-marker',
+                html: `
+                    <div style="background-color: ${bgColor}; border: 2.5px solid ${borderColor}; color: white; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 19px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); cursor: pointer;">
+                        ${emoji}
+                    </div>
+                `,
+                iconSize: [38, 38],
+                iconAnchor: [19, 19],
+                popupAnchor: [0, -20]
+            });
+        }
+
+        vendorsData.forEach(v => {
+            let pts = v.route_points;
+            if (!pts || pts.length === 0) {
+                pts = [[28.627 + (Math.random() - 0.5) * 0.01, 77.088 + (Math.random() - 0.5) * 0.01]];
+            }
+
+            if (pts.length > 1) {
+                L.polyline(pts, {
+                    color: v.is_promoted ? '#f59e0b' : '#0c831f',
+                    weight: 4,
+                    dashArray: v.is_promoted ? null : '6, 8',
+                    opacity: 0.85
+                }).addTo(map);
+            }
+
+            const startPoint = pts[0];
+            bounds.push(startPoint);
+
+            const popupContent = `
+                <div class="p-2 min-w-[220px]">
+                    <div class="flex items-center gap-1 mb-1">
+                        <span class="font-black text-sm text-slate-900">${v.name}</span>
+                        ${v.is_promoted ? '<span style="background:#f59e0b;color:white;font-size:9px;font-weight:bold;padding:1px 6px;border-radius:99px;">FEATURED</span>' : ''}
+                    </div>
+                    <div class="text-xs text-emerald-700 font-bold">${v.category} • ${v.vehicle}</div>
+                    <div class="text-xs text-slate-600 mt-1">📍 ${v.area}</div>
+                    <div class="text-xs text-slate-600">⏰ ${v.morning_slot}</div>
+                    ${v.status_text ? `<div class="mt-1.5 p-1.5 bg-slate-50 rounded text-[11px] italic text-slate-700">"${v.status_text}"</div>` : ''}
+                    <div class="mt-2.5 pt-2 border-t border-slate-100 flex justify-between items-center">
+                        <span class="text-xs font-bold text-amber-500">⭐ ${v.rating}</span>
+                        <a href="${v.store_url}" style="background:#0c831f;color:white;font-weight:800;font-size:11px;padding:5px 12px;border-radius:10px;text-decoration:none;">Shop Thela →</a>
+                    </div>
+                </div>
+            `;
+
+            L.marker(startPoint, { icon: createThelaIcon(v.is_promoted, v.category) })
+                .addTo(map)
+                .bindPopup(popupContent, { className: 'custom-popup' });
+        });
+
+        if (bounds.length > 0) {
+            map.fitBounds(bounds, { padding: [40, 40] });
+        }
+
+        setTimeout(function() {
+            map.invalidateSize();
+        }, 400);
+    });
+</script>
+{% endblock %}
